@@ -12,12 +12,12 @@ use std::net::SocketAddr;
 #[tokio::main]
 async fn main() {
     // Create a router
-    let app = Router::new()
-        .route("/", get(|| async { "Welcome to my rust server!" }))
-        .nest_service("/static", ServeDir::new("static"));        
+    let app: Router = Router::new()        
+        .nest_service("/", ServeDir::new("static"))
+        .fallback(get(|| async { "404: Page not found"}));
 
     // Choose port
-    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+    let addr: SocketAddr = SocketAddr::from(([127, 0, 0, 1], 3000));
     println!("🚀Server running on http://{}", addr);
 
     // Start server using axum::serve
