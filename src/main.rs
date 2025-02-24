@@ -19,6 +19,10 @@ async fn about() -> Html<&'static str> {
     Html("<h1>About:</h1> <p>This is a Rust server built with Axum</p>")
 }
 
+async fn contact() -> Html<&'static str> {
+    Html("<p>Contact form here </p>")
+}
+
 
 // Creating a simple server
 #[tokio::main]
@@ -27,6 +31,7 @@ async fn main() {
     let app: Router = Router::new()        
         .route("/", get(home))
         .route("/about", get(about))
+        .route("/contact", get(contact))
         .nest_service("/static", ServeDir::new("static"))
         .fallback(get(|| async { "404: Page not found"}));
 
